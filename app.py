@@ -96,7 +96,7 @@ else:
     except Exception as exc:
         st.error(f"Live market data could not be loaded. No synthetic fallback was used. Details: {exc}")
         st.stop()
-    key = st.secrets.get("NEWSAPI_KEY", os.getenv("NEWSAPI_KEY", ""))
+    try:\n        key = st.secrets.get("NEWSAPI_KEY", os.getenv("NEWSAPI_KEY", ""))\n    except Exception:\n        key = os.getenv("NEWSAPI_KEY", "")
     try:
         with st.spinner("Fetching available headlines..."):
             news = get_live_news(ticker, start_date, end_date, key)
